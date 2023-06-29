@@ -52,7 +52,7 @@ public:
 	void intoOutArray(); //将数独地图放到数组中
 	void generateN(); //-n 生成游戏
 	void generateM(int m); //-m
-	void generateR(char *r); //-r
+	void generateR(const char *r); //-r
 	bool isSolve(int i, int j); //判断数独是否能解
 	void mapSolveUnique(); //遍历每个数独盘，进行解的唯一化
 	bool SolveUnique(); //判断数独盘的解是否唯一
@@ -305,7 +305,7 @@ void Shudu::generateM(int m) //生成数独游戏 -m
 	}
 }
 
-void Shudu::generateR(char *r) //生成数独游戏 -r
+void Shudu::generateR(const char *r) //生成数独游戏 -r
 {
 	this->out_array_pointer_ = 0;
 	int *number;
@@ -315,11 +315,10 @@ void Shudu::generateR(char *r) //生成数独游戏 -r
 	int minRank = min/9; //每行挖空最小值
 	int maxRank = max/9; //每行挖空最大值
 	srand((unsigned)time(NULL)); //随机数：rand()生成不同的随机种子。
-	int sum;//记录每个终盘的挖空数量总和
 
 	for(int map = 0; map < this->output_num_; map++) //每张数独地图进行挖空
 	{
-		sum = 0;
+		int sum = 0;//记录每个终盘的挖空数量总和
 		for (int i = 1; i <= 9; i++)
 		{
 			if(i==9 && sum < min) //最后一行要保证挖空数量总和>=最小值
@@ -353,7 +352,7 @@ void Shudu::generateR(char *r) //生成数独游戏 -r
 bool Shudu::readShudu(fstream &read_file) //读取数独问题
 {
 	string str_line;
-	int num = 0;
+	int num;
 	memset(num_row, true, sizeof(num_row));
 	memset(num_col, true, sizeof(num_col));
 	memset(num_box, true, sizeof(num_box));
@@ -503,7 +502,7 @@ void Shudu::mapSolveUnique(){ //遍历每张地图,对每个地图的解进行�
 }
 
 bool Shudu::SolveUnique() { //将数独盘化为唯一解
-    int cnt = 0;  // 解的个数
+    int cnt;  // 解的个数
 	int row, col;
     // 枚举所有空格
     for (int i = 1; i <= 9; i++) {
