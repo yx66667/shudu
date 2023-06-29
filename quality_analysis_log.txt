@@ -1,0 +1,49 @@
+cppcheck: Windows 64-bit binaries currently default to the 'win64' platform. Starting with Cppcheck 2.13 they will default to 'native' instead. Please specify '--platform=win64' explicitly if you rely on this.
+Checking shudu1.cpp ...
+shudu1.cpp:1:0: information: Include file: <stdio.h> not found. Please note: Cppcheck does not need standard library headers to get proper results. [missingIncludeSystem]
+#include <stdio.h>
+^
+shudu1.cpp:2:0: information: Include file: <tchar.h> not found. Please note: Cppcheck does not need standard library headers to get proper results. [missingIncludeSystem]
+#include <tchar.h>
+^
+shudu1.cpp:3:0: information: Include file: <iostream> not found. Please note: Cppcheck does not need standard library headers to get proper results. [missingIncludeSystem]
+#include <iostream>
+^
+shudu1.cpp:4:0: information: Include file: <windows.h> not found. Please note: Cppcheck does not need standard library headers to get proper results. [missingIncludeSystem]
+#include <windows.h>
+^
+shudu1.cpp:5:0: information: Include file: <fstream> not found. Please note: Cppcheck does not need standard library headers to get proper results. [missingIncludeSystem]
+#include <fstream>
+^
+shudu1.cpp:6:0: information: Include file: <regex> not found. Please note: Cppcheck does not need standard library headers to get proper results. [missingIncludeSystem]
+#include <regex>
+^
+shudu1.cpp:7:0: information: Include file: <sstream> not found. Please note: Cppcheck does not need standard library headers to get proper results. [missingIncludeSystem]
+#include <sstream>
+^
+shudu1.cpp:8:0: information: Include file: <time.h> not found. Please note: Cppcheck does not need standard library headers to get proper results. [missingIncludeSystem]
+#include <time.h>
+^
+shudu1.cpp:9:0: information: Include file: <string.h> not found. Please note: Cppcheck does not need standard library headers to get proper results. [missingIncludeSystem]
+#include <string.h>
+^
+shudu1.cpp:10:0: information: Include file: <stdlib.h> not found. Please note: Cppcheck does not need standard library headers to get proper results. [missingIncludeSystem]
+#include <stdlib.h>
+^
+shudu1.cpp:11:0: information: Include file: <SDKDDKVer.h> not found. Please note: Cppcheck does not need standard library headers to get proper results. [missingIncludeSystem]
+#include <SDKDDKVer.h>
+^
+shudu1.cpp:318:6: style: The scope of the variable 'sum' can be reduced. [variableScope]
+ int sum;//记录每个终盘的挖空数量总和
+     ^
+shudu1.cpp:308:29: style: Parameter 'r' can be declared as pointer to const [constParameterPointer]
+void Shudu::generateR(char *r) //生成数独游戏 -r
+                            ^
+shudu1.cpp:174:9: warning: Size of pointer 'out_array_' used instead of size of its data. [pointerSize]
+ memset(out_array_, '\0', sizeof(out_array_));
+        ^
+shudu1.cpp:356:10: style: Variable 'num' is assigned a value that is never used. [unreadVariable]
+ int num = 0;
+         ^
+shudu1.cpp:506:13: style: Variable 'cnt' is assigned a value that is never used. [unreadVariable]
+    int cnt = 0;  // 解的个数
