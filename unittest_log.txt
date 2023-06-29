@@ -1,0 +1,52 @@
+mizu@mizu-virtual-machine:~/文档/pair_programming$ ./test
+[==========] Running 20 tests from 2 test suites.
+[----------] Global test environment set-up.
+[----------] 11 tests from Input
+[ RUN      ] Input.c1
+[       OK ] Input.c1 (0 ms)
+[ RUN      ] Input.c1000000
+[       OK ] Input.c1000000 (0 ms)
+[ RUN      ] Input.s
+[       OK ] Input.s (0 ms)
+[ RUN      ] Input.n1
+[       OK ] Input.n1 (0 ms)
+[ RUN      ] Input.n10000
+[       OK ] Input.n10000 (0 ms)
+[ RUN      ] Input.n1_m1
+[       OK ] Input.n1_m1 (0 ms)
+[ RUN      ] Input.n10000_m3
+[       OK ] Input.n10000_m3 (0 ms)
+[ RUN      ] Input.n1_r20_55
+[       OK ] Input.n1_r20_55 (0 ms)
+[ RUN      ] Input.n10000_r20_55
+[       OK ] Input.n10000_r20_55 (0 ms)
+[ RUN      ] Input.n1_u
+[       OK ] Input.n1_u (0 ms)
+[ RUN      ] Input.n10000_u
+[       OK ] Input.n10000_u (0 ms)
+[----------] 11 tests from Input (5 ms total)
+
+[----------] 9 tests from Shudu
+[ RUN      ] Shudu.Init_20
+[       OK ] Shudu.Init_20 (0 ms)
+[ RUN      ] Shudu.Generate_Result
+[       OK ] Shudu.Generate_Result (0 ms)
+[ RUN      ] Shudu.Generate_Solution
+[       OK ] Shudu.Generate_Solution (0 ms)
+[ RUN      ] Shudu.Generate_Game
+[       OK ] Shudu.Generate_Game (0 ms)
+[ RUN      ] Shudu.Test_m1
+[       OK ] Shudu.Test_m1 (0 ms)
+[ RUN      ] Shudu.Test_m2
+[       OK ] Shudu.Test_m2 (0 ms)
+[ RUN      ] Shudu.Test_m3
+[       OK ] Shudu.Test_m3 (0 ms)
+[ RUN      ] Shudu.Test_r
+[       OK ] Shudu.Test_r (0 ms)
+[ RUN      ] Shudu.Test_u
+[       OK ] Shudu.Test_u (0 ms)
+[----------] 9 tests from Shudu (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 20 tests from 2 test suites ran. (5 ms total)
+[  PASSED  ] 20 tests.
