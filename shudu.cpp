@@ -53,6 +53,9 @@ public:
 	void generateN(); //-n 生成游戏
 	void generateM(int m); //-m
 	void generateR(char *r); //-r
+	bool isSolve(int i, int j); //判断数独是否能解
+	void mapSolveUnique(); //遍历每个数独盘，进行解的唯一化
+	bool SolveUnique(); //判断数独盘的解是否唯一
 };
 
 Input::Input(int argc, char** argv)
@@ -435,6 +438,124 @@ bool Shudu::shuduSolve(int i, int j) //利用递归解数独
 	return false;
 }
 
+bool Shudu::isSolve(int i, int j) //利用递归解数独，就是shuduSolve函数，不改变$值
+{
+	if (i == 9 && j == 10)
+		return true;
+	if (i != 9 && j == 10){
+		i++;
+		j = 1;
+	}
+	if (this->board_[i][j] != '$') //空格用$表示
+		return shuduSolve(i, j + 1);
+
+	int row = ((i - 1) / 3) * 3 + 1;
+	int col = ((j - 1) / 3) * 3 + 1;
+
+	for (int num = 1; num <= NUMBER; num++)
+	{
+		if (this->num_row[num][i] == true
+			&& this->num_col[num][j] == true
+			&& this->num_box[num][row][col] == true)
+		{
+			this->num_row[num][i] = false;
+			this->num_col[num][j] = false;
+			this->num_box[num][row][col] = false;
+
+			bool out_come = shuduSolve(i, j + 1);
+			if (out_come)
+				return true;
+
+			this->num_row[num][i] = true;
+			this->num_col[num][j] = true;
+			this->num_box[num][row][col] = true;
+		}
+	}
+	return false;
+}
+
+void Shudu::mapSolveUnique(){ //遍历每张地图,对每个地图的解进行唯一化
+	this->out_array_pointer_ = 0;
+	int num, row, col;
+	cout<<this->output_num_<<endl;
+	for(int map = 0; map < this->output_num_; map++) //遍历每张地图,从数组中取出数独对应元素到board_[10][10]中，并更新判断条件
+	{
+		for (int i = 1; i <= 9; i++)
+		{
+			for (int j = 1; j <= 9; j++)
+			{
+				this->board_[i][j] = this->out_array_[this->out_array_pointer_++];
+				if(this->board_[i][j] != '$'){
+					num = board_[i][j] - '0';
+					row = ((i - 1) / 3) * 3 + 1;
+					col = ((j - 1) / 3) * 3 + 1;
+					this->num_row[num][i] = false;
+					this->num_col[num][j] = false;
+					this->num_box[num][row][col] = false;
+				}
+				this->out_array_pointer_++;
+			}
+		}
+		SolveUnique(); //对该数独盘唯一化，存到board_[i][j]
+		this->out_array_pointer_ = this->out_array_pointer_ - 162;
+		intoOutArray(); //将唯一化后的board_[i][j]存到输出数组中
+	}
+}
+
+bool Shudu::SolveUnique() { //将数独盘化为唯一解
+    int cnt = 0;  // 解的个数
+	int row, col;
+    // 枚举所有空格
+    for (int i = 1; i <= 9; i++) {
+        for (int j = 1; j <= 9; j++) {
+            if (board_[i][j] == '$') {  // 找到一个空格
+                cnt = 0;
+				row = ((i - 1) / 3) * 3 + 1;
+				col = ((j - 1) / 3) * 3 + 1;
+                // 尝试填入 1~9 的数字
+                for (int k = 1; k <= 9; k++) {//模拟解数独过程，试探某个空有多解的情况,如果有多解，则不能挖空，把该位置的解固定为找到的第一个数
+                    if (this->num_row[k][i] == true && this->num_col[k][j] == true && this->num_box[k][row][col] == true) { //可以填
+						this->num_row[k][i] = false;
+						this->num_col[k][j] = false;
+						this->num_box[k][row][col] = false;
+                        if (isSolve(i, j + 1)) { //找加入该位置填k时，数独是否有解
+							if(cnt == 0)
+								board_[i][j] = k + '0'; //把该位置的解固定为找到的第一个k
+                            cnt++;  // 每找到一个解就+1
+                            if (cnt > 1) { //多解
+								this->num_row[k][i] = true; 
+								this->num_col[k][j] = true;
+								this->num_box[k][row][col] = true;
+								break;
+                            }
+                        }
+						else{ //无解
+							this->num_row[k][i] = true;
+							this->num_col[k][j] = true;
+							this->num_box[k][row][col] = true;
+						}
+                    }
+				}
+				if(cnt == 1){
+					board_[i][j] = '$';  // 如果该空只有一个解，可以挖空
+				}
+            }
+        }
+    }
+	for (int i = 1; i <= 9; i++) { //最后为了下一个数独终盘需要，要判断条件全部变为true
+        for (int j = 1; j <= 9; j++) {
+			row = ((i - 1) / 3) * 3 + 1;
+			col = ((j - 1) / 3) * 3 + 1;
+			for (int k = 1; k <= 9; k++) {
+				this->num_row[k][i] = true;
+				this->num_col[k][j] = true;
+				this->num_box[k][row][col] = true;
+			}
+		}
+	}
+	return true;
+}
+
 void Shudu::shuchu() //输出数组中对应的所有数独数独
 {
 	this->out_array_[this->out_array_pointer_] = '\0';  // 最后一个终局不用空行
@@ -489,7 +610,11 @@ int main(int argc, char* argv[])
 		break;
 
 	case 'u': //待实现
-		cout<<input.select<<endl;
+		shudu.arrayInit(input.map_num);
+		shudu.strategyC(1, 2);
+		shudu.generateR("20~46");
+		shudu.mapSolveUnique();
+		shudu.shuchu();
 		break;
 
 	case 'm': 
